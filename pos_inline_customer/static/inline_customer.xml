@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-    <t t-name="ActionPadWithInlineCustomer" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+    <t t-name="InlineCustomer" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
         <xpath expr="//button[hasclass('set-customer')]" position="before">
             <div class="searchbox-client top-content-center">
                 <input class="search_customers" />
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.css" rel="stylesheet"/>
+                <script src="https:cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.js">
+
+                </script>
             </div>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.css" rel="stylesheet"/>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.js" />
-            <script type="text/javascript" src="/pos_inline_customer/static/inline_customer.js" />
         </xpath>
     </t>
-
 </templates>

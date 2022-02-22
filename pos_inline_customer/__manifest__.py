@@ -12,6 +12,7 @@
 
     # always loaded
     'data': [
+        'views/inline_customer.xml'
     ],
     'qweb': [
         'static/inline_customer.xml',
