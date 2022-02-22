@@ -26,6 +26,7 @@ odoo.define('pos_inline_customer.InlineCustomer', function(require) {
             //its called each time screen changed,
             //should not be called until partners are loaded once via after_load_server_data (first time)
             if(once_loaded && !$('.select2-focusser.select2-offscreen').length){
+                triggered_on_load = 0;
                 load_partners_drop_down(this);
             }
             var order = this.get_order();
@@ -41,11 +42,12 @@ odoo.define('pos_inline_customer.InlineCustomer', function(require) {
     let triggered_on_load = 0;
     let selected_client = null;
 
+    let search_fields = ['name', 'email'];
+    let show_all_search_fields_in_text = true;
+
     function load_partners_drop_down(pos_model){
         once_loaded = 1;
         let partners_array = pos_model.partners;
-        let search_fields = ['name', 'email'];
-        let show_all_search_fields_in_text = true;
 
         set_display_text(partners_array, show_all_search_fields_in_text, search_fields);
         $(".search_customers").empty();
