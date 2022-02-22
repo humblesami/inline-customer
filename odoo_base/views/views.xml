@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+        <record id="module_view_filter" model="ir.ui.view">
+            <field name="name">ir.module.module.search.customized</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.view_module_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='extra']" position="after">
+                    <separator/>
+                    <filter name="visio_apps" string="Visio Apps" domain="[('author', 'like', 'sami')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="base.open_module_tree" model="ir.actions.act_window">
+            <field name="name">Apps</field>
+            <field name="res_model">ir.module.module</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_visio_apps':1}</field>
+            <field name="search_view_id" ref="module_view_filter"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                No module found!
+              </p><p>
+                You should try other search criteria.
+              </p>
+            </field>
+        </record>
+
+        <record id="module_view_kanban" model="ir.ui.view">
+            <field name="name">App Kanban Customized</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.module_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_module_vignette')]" position="replace">
+                    <div class="oe_module_vignette">
+                        <t t-set="installed" t-value="record.state.raw_value == 'installed'"/>
+                        <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                            <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#"
+                               role="button" aria-label="Dropdown menu" title="Dropdown menu">
+                                <span class="fa fa-ellipsis-v"/>
+                            </a>
+                            <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <a type="edit" class="dropdown-item">Module Info</a>
+                                <a t-if="record.website.raw_value" role="menuitem" class="dropdown-item" t-att-href="record.website.raw_value" target="_blank">Learn More</a>
+                                <a t-if="installed" name="button_immediate_upgrade" type="object" role="menuitem" class="dropdown-item">Upgrade</a>
+                                <a t-if="installed" name="button_uninstall_wizard" type="object" role="menuitem" class="dropdown-item">Uninstall</a>
+                            </div>
+                        </div>
+                        <img t-attf-src="#{record.icon.value}" class="oe_module_icon" alt="Icon"/>
+                        <div class="oe_module_desc" t-att-title="record.shortdesc.value">
+                            <h4 class="o_kanban_record_title">
+                                <field name="shortdesc"/>&amp;nbsp;
+                            </h4>
+                            <p class="oe_module_name">
+                                <code groups="base.group_no_one"><field name="name"/></code>
+                            </p>
+                            <div class="oe_module_action">
+                                <a t-att-href="record.website.raw_value" target="_blank" attrs="{'invisible':[('website', '=', '')]}"
+                                   class="btn btn-sm btn-secondary float-right" role="button">Learn More</a>
+                                <a type="edit" class="btn btn-secondary btn-sm float-right" role="button" attrs="{'invisible': [('website', '!=', '')]}">Module Info</a>
+                                <button type="object" class="btn btn-primary btn-sm" name="button_immediate_install"
+                                        states="uninstalled" t-if="! record.to_buy.raw_value">Install</button>
+                                <a class="btn btn-info btn-sm" states="uninstalled,uninstallable" t-if="record.to_buy.raw_value" role="button">Upgrade</a>
+                                <a role="button" class="btn btn-sm btn-warning" states="installed" name="button_immediate_upgrade" type="object">Upgrade</a>
+                                <button states="to remove" type="object" class="btn btn-sm btn-primary" name="button_uninstall_cancel">Cancel Uninstall</button>
+                                <button states="to install" type="object" class="btn btn-sm btn-primary" name="button_install_cancel">Cancel Install</button>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <menuitem id="base.menu_management" name="Apps" sequence="0"/>
+        <menuitem id="base.menu_apps" parent="base.menu_management" name="Apps" />
+    </data>
+</odoo>
