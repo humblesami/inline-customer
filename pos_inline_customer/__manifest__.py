@@ -12,9 +12,10 @@
 
     # always loaded
     'data': [
-        'views/inline_customer.xml'
+        'views/inline_customer.xml',
     ],
     'qweb': [
+        'static/inline_customer_mobile.xml',
         'static/inline_customer.xml',
     ],
     'application': True
