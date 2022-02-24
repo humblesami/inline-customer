@@ -1,4 +1,4 @@
-odoo.define('pos_inline_customer.InlineCustomer', function(require) {
+odoo.define('inline_customer_pos.InlineCustomerWidget', function(require) {
     'use strict';
     let rpc = require('web.rpc');
     var models = require('point_of_sale.models');
@@ -7,13 +7,17 @@ odoo.define('pos_inline_customer.InlineCustomer', function(require) {
         after_load_server_data: function(){
             this.load_orders();
             this.set_start_order();
-
             let pos_model = this;
+            console.log(333);
+            selected_client = pos_model.get_order().get_client();
             $(function(){
                 load_partners_drop_down(pos_model);
             });
-            selected_client = pos_model.get_order().get_client();
-
+            $('body').on('click', '.btn-switchpane.secondary', function(){
+                setTimeout(function(){
+                    load_partners_drop_down(pos_model);
+                }, 100);
+            });
             if(this.config.use_proxy){
                 if (this.config.iface_customer_facing_display) {
                     this.on('change:selectedOrder', this.send_current_order_to_customer_facing_display, this);
@@ -46,6 +50,13 @@ odoo.define('pos_inline_customer.InlineCustomer', function(require) {
     let show_all_search_fields_in_text = true;
 
     function load_partners_drop_down(pos_model){
+        let input_found = $(".search_customers").length;
+        console.log('button there', input_found);
+        if(input_found){
+            if(!input_found){
+                return;
+            }
+        }
         once_loaded = 1;
         let partners_array = pos_model.partners;
 

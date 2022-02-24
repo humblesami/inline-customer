@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Pos Inline Customer",
+    'name': "Inline Customer",
     'description': """
         Customer Selection Brought to Order Page
     """,
@@ -15,7 +15,7 @@
         'views/inline_customer.xml',
     ],
     'qweb': [
-        'static/inline_customer_mobile.xml',
+        # 'static/inline_customer_mobile.xml',
         'static/inline_customer.xml',
     ],
     'application': True

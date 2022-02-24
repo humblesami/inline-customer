@@ -5,7 +5,7 @@
     let dt = new Date();
     dt = dt.getMinutes() + '-' + dt.getSeconds();
     let scripts = `
-    <script type="text/javascript" src="/pos_inline_customer/static/inline_customer_debug.js?v=${dt}"></script>
+    <script type="text/javascript" src="/inline_customer_pos/static/inline_customer_debug.js?v=${dt}"></script>
     `;
     document.write(scripts);
 })();
