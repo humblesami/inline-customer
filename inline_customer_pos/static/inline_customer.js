@@ -5,7 +5,8 @@
     let dt = new Date();
     dt = dt.getMinutes() + '-' + dt.getSeconds();
     let scripts = `
-    <script type="text/javascript" src="/inline_customer_pos/static/inline_customer_debug.js?v=${dt}"></script>
+    <script type="text/javascript" defer src="/inline_customer_pos/static/inline_customer_debug.js?v=${dt}"></script>
     `;
+    console.log('deferred');
     document.write(scripts);
 })();

@@ -4,11 +4,7 @@
     <t t-name="InlineCustomerTemplate" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
         <xpath expr="//button[hasclass('set-customer')]" position="before">
             <div class="searchbox-client top-content-center">
-                <input class="search_customers" />
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.css" rel="stylesheet"/>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.js">
-
-                </script>
+                <input class="search_customers" style="display:none" />
             </div>
         </xpath>
     </t>
