@@ -8,7 +8,6 @@ odoo.define('inline_customer_pos.InlineCustomerWidget', function(require) {
             this.load_orders();
             this.set_start_order();
             let pos_model = this;
-            console.log(333);
             selected_client = pos_model.get_order().get_client();
             $(function(){
                 load_partners_drop_down(pos_model);
@@ -46,16 +45,21 @@ odoo.define('inline_customer_pos.InlineCustomerWidget', function(require) {
     let triggered_on_load = 0;
     let selected_client = null;
 
-    let search_fields = ['name', 'email'];
+    let search_fields = ['name', 'phone', 'mobile'];
     let show_all_search_fields_in_text = true;
 
     function load_partners_drop_down(pos_model){
         let input_found = $(".search_customers").length;
-        console.log('button there', input_found);
         if(input_found){
-            if(!input_found){
-                return;
-            }
+            console.log('Loading partners list');
+        }
+        else{
+            console.log('Customers dropdown can not be loaded yet');
+            return;
+        }
+        if($('.select2-container.search_customers').length){
+            console.log('partner list already loaded');
+            return;
         }
         once_loaded = 1;
         let partners_array = pos_model.partners;
@@ -123,10 +127,16 @@ odoo.define('inline_customer_pos.InlineCustomerWidget', function(require) {
                 for(let field of search_fields){
                     if(item.text)
                     {
-                        item.text += ' - ' + item[field];
+                        if(item[field])
+                        {
+                            item.text += ' - ' + item[field];
+                        }
                     }
                     else{
-                        item.text = item[field];
+                        if(item[field])
+                        {
+                            item.text = item[field];
+                        }
                     }
                 }
             }
