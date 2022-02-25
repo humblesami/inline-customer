@@ -3,46 +3,32 @@ odoo.define('inline_customer_pos.InlineCustomerWidget', function(require) {
     let rpc = require('web.rpc');
     var models = require('point_of_sale.models');
 
+    var pos_model_super = models.PosModel.prototype;
     models.PosModel = models.PosModel.extend({
         after_load_server_data: function(){
-            this.load_orders();
-            this.set_start_order();
-
-            //Custom Code
-            let pos_model = this;
-            $(function(){
-                load_partners_drop_down(pos_model);
+            var self = this;
+            return pos_model_super.after_load_server_data.apply(this, arguments).then(function(){
+                custom_script_to_run_on_data_loaded(self)
             });
+        },
+        get_client: function(){
+            //called every time when we come to order screen in desktop
+            load_partners_drop_down(this);
+            return pos_model_super.get_client.apply(this, arguments);
+        },
+    });
 
+    function custom_script_to_run_on_data_loaded(pos_model){
+        $(function(){
+            load_partners_drop_down(pos_model);
             $('body').on('click', '.btn-switchpane.secondary', function(){
                 setTimeout(function(){
                     load_partners_drop_down(pos_model);
                 }, 100);
             });
-            //End custom Code
+        });
+    }
 
-            if(this.config.use_proxy){
-                if (this.config.iface_customer_facing_display) {
-                    this.on('change:selectedOrder', this.send_current_order_to_customer_facing_display, this);
-                }
-                return this.connect_to_proxy();
-            }
-            return Promise.resolve();
-        },
-        get_client: function(){
-            //its called each time screen changed,
-            //should not be called until partners are loaded once via after_load_server_data (first time)
-            load_partners_drop_down(this);
-            //end custom code
-
-            var order = this.get_order();
-            if (order) {
-                let res = order.get_client();
-                return res;
-            }
-            return null;
-        },
-    });
 
     let search_fields = ['name', 'phone', 'mobile'];
     let show_all_search_fields_in_text = true;

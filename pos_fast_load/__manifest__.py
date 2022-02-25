@@ -8,7 +8,7 @@
     'author': "Visiomate sami",
 
     # any module necessary for this one to work correctly
-    'depends': ['tst_changes'],
+    'depends': ['point_of_sale'],
 
     # always loaded
     'data': [

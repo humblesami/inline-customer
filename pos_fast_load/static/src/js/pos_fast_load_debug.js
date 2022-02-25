@@ -21,7 +21,7 @@ odoo.define('pos_fast_load',function(require) {
                         resolve();
                     } else {
                         var model = self.models[index];
-                        self.chrome.loading_message(_t('Loading')+' '+(model.label || model.model || ''), progress);
+                        self.setLoadingMessage(_t('Loading')+' '+(model.label || model.model || ''), progress);
 
                         var cond = typeof model.condition === 'function'  ? model.condition(self,tmp) : true;
                         if (!cond) {
@@ -50,7 +50,7 @@ odoo.define('pos_fast_load',function(require) {
                             }
                             var params = {
                                 model: model.model,
-                                context: _.extend(context, session.user_context || {}),
+                                context: _.extend(context, self.session.user_context || {}),
                             };
 
                             if (model.ids) {
@@ -63,7 +63,7 @@ odoo.define('pos_fast_load',function(require) {
                                 params.orderBy = order;
                             }
 
-                            rpc.query(params).then(function (result) {
+                            self.rpc(params).then(function (result) {
                                 try { // catching exceptions in model.loaded(...)
                                     Promise.resolve(model.loaded(self, result, tmp))
                                         .then(function () { load_model(index + 1); },
