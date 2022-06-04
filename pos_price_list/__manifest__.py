@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Customized Base",
+    'name': "POS Price List",
 
     'summary': """
-        Odoo Base app for minor UI customization
+        Price List Selection
         """,
 
     'description': """
@@ -16,11 +16,11 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Base',
+    'category': 'Sales',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','web'],
+    'depends': ['point_of_sale'],
 
     # always loaded
     'data': [

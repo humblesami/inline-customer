@@ -1,5 +1,23 @@
 <odoo>
     <data>
+<!--        <template id="news_website_layout" name="New Website Layout" inherit_id="website.layout">-->
+<!--            <xpath expr="//div[@id='wrapwrap']" position="before">-->
+<!--                <script type="text/javascript" src="/odoo_base/static/js/await_jquery.js">-->
+<!--                </script>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
+<!--        <template id="remove_lazy_assets" inherit_id="web.frontend_layout">-->
+<!--            <xpath expr='//t[@t-call-assets="web.assets_frontend_lazy"]' position="replace">-->
+<!--            </xpath>-->
+<!--            <xpath expr='//t[@t-call-assets="web.assets_common_lazy"]' position="replace">-->
+<!--                <t t-if="uid">-->
+<!--                    <t t-call-assets="web.assets_common_lazy" t-css="false" lazy_load="True"/>-->
+<!--                    <t t-call-assets="web.assets_frontend_lazy" t-css="false" lazy_load="True"/>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
         <record id="module_view_filter" model="ir.ui.view">
             <field name="name">ir.module.module.search.customized</field>
             <field name="model">ir.module.module</field>
@@ -8,6 +26,7 @@
                 <xpath expr="//filter[@name='extra']" position="after">
                     <separator/>
                     <filter name="visio_apps" string="Visio Apps" domain="[('author', 'like', 'sami')]"/>
+                    <filter name="active_apps" string="Active Apps" domain="[('author', 'like', 'active')]"/>
                 </xpath>
             </field>
         </record>
@@ -27,51 +46,7 @@
             </field>
         </record>
 
-        <record id="module_view_kanban" model="ir.ui.view">
-            <field name="name">App Kanban Customized</field>
-            <field name="model">ir.module.module</field>
-            <field name="inherit_id" ref="base.module_view_kanban"/>
-            <field name="arch" type="xml">
-                <xpath expr="//div[hasclass('oe_module_vignette')]" position="replace">
-                    <div class="oe_module_vignette">
-                        <t t-set="installed" t-value="record.state.raw_value == 'installed'"/>
-                        <div class="o_dropdown_kanban dropdown" tabindex="-1">
-                            <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#"
-                               role="button" aria-label="Dropdown menu" title="Dropdown menu">
-                                <span class="fa fa-ellipsis-v"/>
-                            </a>
-                            <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <a type="edit" class="dropdown-item">Module Info</a>
-                                <a t-if="record.website.raw_value" role="menuitem" class="dropdown-item" t-att-href="record.website.raw_value" target="_blank">Learn More</a>
-                                <a t-if="installed" name="button_immediate_upgrade" type="object" role="menuitem" class="dropdown-item">Upgrade</a>
-                                <a t-if="installed" name="button_uninstall_wizard" type="object" role="menuitem" class="dropdown-item">Uninstall</a>
-                            </div>
-                        </div>
-                        <img t-attf-src="#{record.icon.value}" class="oe_module_icon" alt="Icon"/>
-                        <div class="oe_module_desc" t-att-title="record.shortdesc.value">
-                            <h4 class="o_kanban_record_title">
-                                <field name="shortdesc"/>&amp;nbsp;
-                            </h4>
-                            <p class="oe_module_name">
-                                <code groups="base.group_no_one"><field name="name"/></code>
-                            </p>
-                            <div class="oe_module_action">
-                                <a t-att-href="record.website.raw_value" target="_blank" attrs="{'invisible':[('website', '=', '')]}"
-                                   class="btn btn-sm btn-secondary float-right" role="button">Learn More</a>
-                                <a type="edit" class="btn btn-secondary btn-sm float-right" role="button" attrs="{'invisible': [('website', '!=', '')]}">Module Info</a>
-                                <button type="object" class="btn btn-primary btn-sm" name="button_immediate_install"
-                                        states="uninstalled" t-if="! record.to_buy.raw_value">Install</button>
-                                <a class="btn btn-info btn-sm" states="uninstalled,uninstallable" t-if="record.to_buy.raw_value" role="button">Upgrade</a>
-                                <a role="button" class="btn btn-sm btn-warning" states="installed" name="button_immediate_upgrade" type="object">Upgrade</a>
-                                <button states="to remove" type="object" class="btn btn-sm btn-primary" name="button_uninstall_cancel">Cancel Uninstall</button>
-                                <button states="to install" type="object" class="btn btn-sm btn-primary" name="button_install_cancel">Cancel Install</button>
-                            </div>
-                        </div>
-                    </div>
-                </xpath>
-            </field>
-        </record>
         <menuitem id="base.menu_management" name="Apps" sequence="0"/>
-        <menuitem id="base.menu_apps" parent="base.menu_management" name="Apps" />
+
     </data>
 </odoo>

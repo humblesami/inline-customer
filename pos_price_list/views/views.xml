@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="pl_assets" inherit_id="point_of_sale.assets" name="Price list assets">
+            <xpath expr='//script[@src="/point_of_sale/static/src/js/models.js"]' position="after">
+                <script src="/pos_price_list/static/js/pl.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

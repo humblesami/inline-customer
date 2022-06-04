@@ -1,0 +1,9 @@
+aws nameservers
+ns-354.awsdns-44.com
+ns-733.awsdns-27.net
+ns-1784.awsdns-31.co.uk
+ns-1252.awsdns-28.org
+
+CF nameservers
+jermaine.ns.cloudflare.com
+natasha.ns.cloudflare.com
