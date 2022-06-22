@@ -5,5 +5,46 @@
                 <script src="/pos_price_list/static/js/pl.js"/>
             </xpath>
         </template>
+        <record id="view_pos_config_form_inherit_pricelist" model="ir.ui.view">
+            <field name="name">POS configuration</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h2[3]" position="before">
+                    <h2>Take Away</h2>
+                    <div class="row mt16 o_settings_container" id="take_away">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="is_takeaway"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="is_takeaway" string="Is Take Away?"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16" title="Pricelist">
+                                        <label string="Pricelist" for="applied_pricelist" class="col-lg-3 o_light_label"/>
+                                        <field name="applied_pricelist"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16" title="Effective amount">
+                                        <label string="Effective Amount" for="effective_amount" class="col-lg-3 o_light_label"/>
+                                        <field name="effective_amount"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>

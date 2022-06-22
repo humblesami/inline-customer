@@ -1,7 +1,10 @@
-from odoo import models, fields
+# -*- coding: utf-8 -*-
 
+from odoo import models, fields, api
 
 class PosConfig(models.Model):
     _inherit = 'pos.config'
 
-    special_price_list = fields.Many2one('product.pricelist')
+    is_takeaway = fields.Boolean('Is Takeaway POS?')
+    effective_amount = fields.Float()
+    applied_pricelist = fields.Many2one('product.pricelist')
