@@ -21,7 +21,11 @@ class ApiController(http.Controller):
                 if len(missing_fields):
                     res['data'] = 'Missing Fields => ' + (','.join(missing_fields))
                 else:
-                    model_obj.create(kw)
+                    if kw.get('id'):
+                        item = model_obj.search([('id', '=', kw['id'])])
+                        item.write(kw)
+                    else:
+                        model_obj.create(kw)
                     res = {'status': 'success'}
             else:
                 objects_list = model_obj.search_read(fields=fields)
