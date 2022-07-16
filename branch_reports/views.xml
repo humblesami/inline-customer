@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_report_branch_pnl" model="ir.actions.client">
+            <field name="name">Branch Profit And Loss</field>
+            <field name="tag">account_report</field>
+            <field name="context" eval="{'model': 'account.financial.html.report', 'branching_for_exp': '1', 'id': ref('account_reports.account_financial_report_profitandloss0')}" />
+        </record>
+        <menuitem id="menu_report_branch_pnl" name="Branch Vise PnL" parent="account.menu_finance_reports" groups="base.group_user" action="action_report_branch_pnl" sequence="1"/>
+    </data>
+</odoo>
