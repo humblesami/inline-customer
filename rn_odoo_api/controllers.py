@@ -49,21 +49,28 @@ class ApiController(http.Controller):
             if len(missing_fields):
                 res['data'] = 'Missing Fields => ' + (','.join(missing_fields))
             else:
-                res = {'status': 'success'}
                 if kw.get('id'):
-                    item = model_obj.search([('id', '=', kw['id'])])
+                    item = model_obj.sudo().search([('id', '=', kw['id'])])
                     item.write(kw)
                     res['data'] = kw
                 else:
                     kw['login'] = kw['email']
-                    new_user = model_obj.create(kw)
+                    new_user = model_obj.sudo().create(kw)
                     user_data = kw
                     user_data['id'] = new_user.id
                     res['data'] = user_data
-            return res
-                
+                res['status'] = 'success'
         except Exception as e:
+            res['status'] = 'error'
             res['data'] = str(e)
+        try:
+            request._cr.commit()
+        except Exception as e:
+            request._cr.rollback()
+            if res.get('status') != 'error':
+                res['status'] = 'error'
+                res['data'] = str(e)
+        print(res)
         res = json.dumps(res)
         return res
     
@@ -73,7 +80,7 @@ class ApiController(http.Controller):
         try:
             model_obj = request.env['res.users']
             fields = ['id', 'name', 'email', 'mobile']
-            objects_list = model_obj.search_read(fields=fields)
+            objects_list = model_obj.sudo().search_read(fields=fields)
             res['status'] = 'success'
             res['data'] = objects_list
             # return res
