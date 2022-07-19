@@ -188,7 +188,6 @@ class sale_order(models.Model):
         return res
 
 
-
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
 
@@ -197,6 +196,7 @@ class sale_order_line(models.Model):
         """
         Compute the amounts of the SO line.
         """
+        res_config = self.env['ir.config_parameter'].sudo()
         for line in self:
             # res_config= self.env['res.config.settings'].sudo().search([],order="id desc", limit=1)
             # res_config = self.env['ir.config_parameter'].sudo()
