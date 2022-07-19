@@ -41,7 +41,7 @@ class ApiController(http.Controller):
         res = {'status': 'error', 'data': 'Unknown'}
         try:
             model_obj = request.env['res.users']
-            fields = ['name', 'email', 'mobile']
+            fields = ['name', 'email', 'mobile', 'phone']
             missing_fields = []
             for field in fields:
                 if not kw.get(field):
@@ -55,6 +55,7 @@ class ApiController(http.Controller):
                     res['data'] = kw
                 else:
                     kw['login'] = kw['email']
+                    kw['phone'] = kw['mobile']
                     new_user = model_obj.sudo().create(kw)
                     user_data = kw
                     user_data['id'] = new_user.id
