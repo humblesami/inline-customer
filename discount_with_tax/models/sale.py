@@ -199,7 +199,7 @@ class sale_order_line(models.Model):
         res_config = self.env['ir.config_parameter'].sudo()
         for line in self:
             # res_config= self.env['res.config.settings'].sudo().search([],order="id desc", limit=1)
-            # res_config = self.env['ir.config_parameter'].sudo()
+            res_config = self.env['ir.config_parameter'].sudo()
             tax_policy = res_config.get_param('bi_sale_purchase_discount_with_tax.tax_discount_policy')
             if tax_policy:
                 if tax_policy == 'untax':
