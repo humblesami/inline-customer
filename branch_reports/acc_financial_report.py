@@ -8,10 +8,10 @@ class FinancialReportLine(models.Model):
     _inherit = "account.financial.html.report.line"
 
     def _compute_amls_results(self, options_list, calling_financial_report=None, sign=1, line_type=None):
-        branching = self.env.context.get('branching_for_exp')
-        if not branching:
-            res = super(FinancialReportLine, self)._compute_amls_results(options_list, calling_financial_report=calling_financial_report, sign=sign)
-            return res
+        branching_for_exp = self.env.context.get('branching_for_exp')
+        # if not branching_for_exp:
+        #     res = super(FinancialReportLine, self)._compute_amls_results(options_list, calling_financial_report=calling_financial_report, sign=sign)
+        #     return res
         self.ensure_one()
         params = []
         queries = []
@@ -19,8 +19,7 @@ class FinancialReportLine(models.Model):
         account_financial_report_html = self.financial_report_id
         horizontal_group_by_list = account_financial_report_html._get_options_groupby_fields(options_list[0])
         group_by_list = [self.groupby] + horizontal_group_by_list
-        if branching:
-            group_by_list.append('branch_id')
+        group_by_list.append('branch_id')
         group_by_clause = ','.join('account_move_line.%s' % gb for gb in group_by_list)
         group_by_field = self.env['account.move.line']._fields[self.groupby]
 
